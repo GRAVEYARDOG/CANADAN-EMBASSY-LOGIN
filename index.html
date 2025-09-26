@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canadian Embassy - Client Authentication Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ultra&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #8ABCFF;
+            --accent: #FF8A8A;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+            --success: #4CAF50;
+            --canada-red: #D80621;
+            --notice-yellow: #FFF3CD;
+            --notice-border: #FFC107;
+            --green: #b8d953;
+            --lilac: #b2b2eb;
+            --pink: #bb86e9;
+            --dark-green: #529a91;
+            --peach: #fe96b7;
+            --black: #191819;
+            --grey: #2a292a;
+            --white: #d9d9d9;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, #6CA6FF 100%);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid var(--canada-red);
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .embassy-crest {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .embassy-crest img {
+            width: 70px;
+            height: auto;
+        }
+
+        /* Updated text animation styles for CANADA EMBASSY */
+        .bizzy {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 10px;
+            font-family: "Ultra", serif;
+            font-size: clamp(1.3rem, 3.5vw, 2rem);
+        }
+        
+        .bizzy-letters {
+            animation-name: fontGrow;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            transform-origin: top;
+            transition-timing-function: ease-in-out;
+            line-height: 1;
+            display: inline-block;
+        }
+        
+        @keyframes fontGrow {
+            0% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(2);
+            }
+            100% {
+                transform: scaleY(1);
+            }
+        }
+        
+        .letter-b {
+            color: var(--peach);
+        }
+        
+        .letter-i {
+            color: var(--green);
+            animation-delay: 0.5s;
+        }
+        
+        .letter-z1 {
+            color: var(--pink);
+            animation-delay: 1s;
+        }
+        
+        .letter-z2 {
+            color: var(--lilac);
+            animation-delay: 1.5s;
+        }
+        
+        .letter-y {
+            color: var(--dark-green);
+            animation-delay: 2s;
+        }
+        
+        .letter-e {
+            color: #FFD700; /* Gold for embassy */
+            animation-delay: 0.2s;
+        }
+        
+        .letter-m {
+            color: #C0C0C0; /* Silver */
+            animation-delay: 0.4s;
+        }
+        
+        .letter-b2 {
+            color: #FFA500; /* Orange */
+            animation-delay: 0.6s;
+        }
+        
+        .letter-a2 {
+            color: #00BFFF; /* Deep sky blue */
+            animation-delay: 0.8s;
+        }
+        
+        .letter-s {
+            color: #32CD32; /* Lime green */
+            animation-delay: 1s;
+        }
+        
+        .letter-s2 {
+            color: #8A2BE2; /* Blue violet */
+            animation-delay: 1.2s;
+        }
+        
+        .letter-y2 {
+            color: #FF69B4; /* Hot pink */
+            animation-delay: 1.4s;
+        }
+        
+        .portal-text {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+            margin-top: 5px;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(138, 188, 255, 0.2);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .btn:hover {
+            background: #6CA6FF;
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #FF7373;
+        }
+        
+        .error-message {
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .fingerprint-container {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .fingerprint-icon {
+            width: 120px;
+            height: 120px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            border: 3px solid var(--primary);
+        }
+        
+        .fingerprint-icon i {
+            font-size: 50px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .fingerprint-icon.active {
+            background: var(--primary);
+            transform: scale(1.05);
+            animation: pulse 1.5s infinite;
+        }
+        
+        .fingerprint-icon.active i {
+            color: white;
+        }
+        
+        .fingerprint-icon.success {
+            background: var(--success);
+            border-color: var(--success);
+        }
+        
+        .fingerprint-icon.success i {
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(138, 188, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(138, 188, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(138, 188, 255, 0); }
+        }
+        
+        .instructions {
+            margin: 20px 0;
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .countdown {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 15px 0;
+            color: var(--dark);
+            display: none;
+        }
+        
+        .success-message {
+            background: #E8F5E9;
+            color: var(--success);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            animation: slideIn 0.5s ease;
+            border-left: 4px solid var(--success);
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Enhanced Footer Styles */
+        .footer {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .footer-section {
+            margin-bottom: 15px;
+        }
+        
+        .footer-section h3 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #e1e5eb;
+            padding-bottom: 5px;
+        }
+        
+        .footer-section p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--canada-red);
+            text-decoration: underline;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item i {
+            color: var(--primary);
+            width: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--canada-red);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e1e5eb;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .security-info {
+            margin: 25px 0;
+            padding: 20px;
+            background: #F8FAFF;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .security-info h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .security-info h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .security-info p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .features-list {
+            margin-top: 15px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+            padding: 10px 0;
+            border-bottom: 1px solid #e1e5eb;
+        }
+        
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-item i {
+            margin-right: 12px;
+            color: var(--primary);
+            width: 24px;
+            font-size: 1.1rem;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #E8F4FF;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px dashed var(--primary);
+        }
+        
+        .security-badge i {
+            color: var(--success);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .security-badge span {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .professional-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .professional-text strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            color: var(--dark);
+            margin: 20px 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e1e5eb;
+            font-weight: 600;
+        }
+        
+        .privacy-notice {
+            background: #FFF9E6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #FFC107;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .privacy-notice i {
+            color: #FFC107;
+            margin-right: 8px;
+        }
+        
+        .login-info {
+            background: #F0F7FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .login-info i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .payment-modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .payment-modal {
+            transform: scale(1);
+        }
+        
+        .modal-header {
+            background: var(--notice-yellow);
+            padding: 20px;
+            border-bottom: 1px solid var(--notice-border);
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-header i {
+            font-size: 24px;
+            color: var(--notice-border);
+            margin-right: 15px;
+        }
+        
+        .modal-header h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+        }
+        
+        .modal-content {
+            padding: 25px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        
+        .payment-amount {
+            text-align: center;
+            background: #F8F9FA;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px dashed #e1e5eb;
+        }
+        
+        .payment-amount .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .payment-amount .currency {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .modal-footer {
+            padding: 0 25px 25px;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .modal-footer .btn {
+            flex: 1;
+            margin: 0;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(138, 188, 255, 0.1);
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 12px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .fingerprint-icon {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .fingerprint-icon i {
+                font-size: 40px;
+            }
+            
+            .security-info {
+                padding: 15px;
+            }
+            
+            .bizzy {
+                font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+            }
+            
+            .footer {
+                padding: 20px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .modal-footer {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .content {
+                padding: 15px;
+            }
+            
+            input, .btn {
+                padding: 12px;
+            }
+            
+            .footer {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <div class="embassy-crest">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MCAzMCI+PHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjMwIiBmaWxsPSIjZjAwMDAwIi8+PHJlY3QgeD0iMjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIzMCIgZmlsbD0iI2ZmZiIvPjxwYXRoIGQ9Ik0zMCAxNWwtNSA1aDEwbC01LTV6IiBmaWxsPSIjZjAwMDAwIi8+PC9zdmc+" alt="Canada Logo">
+                </div>
+                <!-- Updated text animation for CANADA EMBASSY -->
+                <div class="bizzy">
+                    <p class="bizzy-letters letter-b">C</p> 
+                    <p class="bizzy-letters letter-i">A</p>
+                    <p class="bizzy-letters letter-z1">N</p>
+                    <p class="bizzy-letters letter-z2">A</p>
+                    <p class="bizzy-letters letter-y">D</p>
+                    <p class="bizzy-letters letter-z1">A</p>
+                </div>
+                <div class="bizzy">
+                    <p class="bizzy-letters letter-e">E</p>
+                    <p class="bizzy-letters letter-m">M</p>
+                    <p class="bizzy-letters letter-b2">B</p>
+                    <p class="bizzy-letters letter-a2">A</p>
+                    <p class="bizzy-letters letter-s">S</p>
+                    <p class="bizzy-letters letter-s2">S</p>
+                    <p class="bizzy-letters letter-y2">Y</p>
+                </div>
+                <div class="portal-text">Client Authentication Portal</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- Login Page -->
+            <div id="login-page" class="page active">
+                <div class="login-info">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Secure Access Notice:</strong> This portal provides authorized clients with secure access to embassy services. All activities are monitored and recorded for security purposes.
+                </div>
+                
+                <div class="section-title">Client Authentication</div>
+                
+                <div class="form-group">
+                    <label for="username">User Name</label>
+                    <input type="text" id="username" placeholder="Enter your full name as in passport">
+                    <div class="error-message" id="username-error">Please enter a valid username</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passport">Passport ID</label>
+                    <input type="text" id="passport" placeholder="Enter your passport ID">
+                    <div class="error-message" id="passport-error">Please enter a valid passport ID</div>
+                </div>
+                
+                <button id="login-btn" class="btn">Authenticate & Proceed</button>
+                
+                <div class="privacy-notice">
+                    <i class="fas fa-shield-alt"></i>
+                    <strong>Privacy Assurance:</strong> Your information is protected under Canadian privacy laws and will only be used for official embassy purposes.
+                </div>
+            </div>
+            
+            <!-- Fingerprint Registration Page -->
+            <div id="fingerprint-page" class="page">
+                <div class="security-info">
+                    <h3><i class="fas fa-shield-alt"></i> Secure Digital Access Portal</h3>
+                    <p class="professional-text">This secure digital access portal facilitates biometric registration services for embassy clients. To proceed with your application, please complete the biometric authentication process below.</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-user-check"></i> Client Services
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-fingerprint"></i> Biometric Registration
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-building"></i> Embassy Services
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-lock"></i> Government Secured
+                        </div>
+                    </div>
+                    
+                    <div class="security-badge">
+                        <i class="fas fa-certificate"></i>
+                        <span>Official Canadian Embassy Portal</span>
+                    </div>
+                </div>
+                
+                <div class="security-info">
+                    <h3><i class="fas fa-lock"></i> Security Information</h3>
+                    <p class="professional-text">This portal employs industry-leading security measures to protect your sensitive information. All data transmissions are encrypted using 256-bit encryption technology.</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-certificate"></i> SSL Certificate
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-key"></i> 256-bit Encryption Protection
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-server"></i> Secure Servers
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-user-shield"></i> Identity Protection
+                        </div>
+                    </div>
+                    
+                    <div class="security-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Verified Service - Authorized Biometric Registration</span>
+                    </div>
+                </div>
+                
+                <div class="section-title">Biometric Registration Process</div>
+                
+                <div class="instructions">
+                    <p>Please register your fingerprint using the interface below. This process typically takes 5 seconds and is required for secure access to embassy services.</p>
+                </div>
+                
+                <div class="fingerprint-container">
+                    <div class="fingerprint-icon" id="fingerprint-btn">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    
+                    <div class="countdown" id="countdown">5</div>
+                    
+                    <p class="instructions">Press and hold the fingerprint icon for 5 seconds to complete registration</p>
+                </div>
+                
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Fingerprint successfully registered. Your biometric data has been securely stored.</p>
+                </div>
+                
+                <div class="privacy-notice">
+                    <i class="fas fa-database"></i>
+                    <strong>Data Retention Notice:</strong> Your biometric information will be stored securely in accordance with Canadian privacy laws and will only be used for official identification purposes.
+                </div>
+                
+                <button id="back-btn" class="btn btn-accent">Return to Authentication</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Enhanced Footer -->
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Canadian Embassy Services</h3>
+                <p>Providing consular assistance and diplomatic services to Canadian citizens abroad.</p>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-passport"></i> Passport Services</a>
+                    <a href="#"><i class="fas fa-file-contract"></i> Visa Information</a>
+                    <a href="#"><i class="fas fa-hands-helping"></i> Consular Assistance</a>
+                    <a href="#"><i class="fas fa-info-circle"></i> Travel Advisory</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Embassy Row, Ottawa, ON K1A 0G2, Canada</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>consular.services@canada-embassy.org</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Mon-Fri: 8:30 AM - 4:30 PM (EST)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#"><i class="fas fa-user-shield"></i> Privacy Policy</a>
+                    <a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a>
+                    <a href="#"><i class="fas fa-question-circle"></i> FAQ</a>
+                    <a href="#"><i class="fas fa-exclamation-triangle"></i> Emergency Contacts</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2023 Government of Canada. All rights reserved. | <i class="fas fa-globe-americas"></i> Ottawa, Canada</p>
+        </div>
+    </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal-overlay" id="payment-modal">
+        <div class="payment-modal">
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Important Payment Notice</h3>
+            </div>
+            <div class="modal-content">
+                <p>A processing fee is required to complete your biometric registration. Please ensure payment is made within 24 hours to avoid delays in your application processing.</p>
+                
+                <div class="payment-amount">
+                    <span class="amount">640</span>
+                    <span class="currency">CAD</span>
+                </div>
+                
+                <p>Payment can be made through our secure payment portal. You will receive an email with payment instructions shortly.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="close-modal">Close</button>
+                <button class="btn" id="proceed-payment">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const loginPage = document.getElementById('login-page');
+            const fingerprintPage = document.getElementById('fingerprint-page');
+            const loginBtn = document.getElementById('login-btn');
+            const backBtn = document.getElementById('back-btn');
+            const fingerprintBtn = document.getElementById('fingerprint-btn');
+            const countdown = document.getElementById('countdown');
+            const successMessage = document.getElementById('success-message');
+            const paymentModal = document.getElementById('payment-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const proceedPaymentBtn = document.getElementById('proceed-payment');
+            const usernameInput = document.getElementById('username');
+            const passportInput = document.getElementById('passport');
+            const usernameError = document.getElementById('username-error');
+            const passportError = document.getElementById('passport-error');
+            
+            // Valid credentials
+            const validUsername = "Alemayehu Gebrewold Hailu";
+            const validPassport = "EQ2560260";
+            
+            // Login functionality
+            loginBtn.addEventListener('click', function() {
+                const username = usernameInput.value.trim();
+                const passport = passportInput.value.trim();
+                
+                // Reset errors
+                usernameError.style.display = 'none';
+                passportError.style.display = 'none';
+                
+                // Validate credentials
+                let isValid = true;
+                
+                if (username !== validUsername) {
+                    usernameError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (passport !== validPassport) {
+                    passportError.style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Add a slight delay for a more professional transition
+                    loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+                    
+                    setTimeout(function() {
+                        // Switch to fingerprint page
+                        loginPage.classList.remove('active');
+                        fingerprintPage.classList.add('active');
+                        loginBtn.innerHTML = 'Authenticate & Proceed';
+                    }, 1000);
+                }
+            });
+            
+            // Back to login functionality
+            backBtn.addEventListener('click', function() {
+                fingerprintPage.classList.remove('active');
+                loginPage.classList.add('active');
+                
+                // Reset fingerprint page
+                fingerprintBtn.classList.remove('active', 'success');
+                countdown.style.display = 'none';
+                successMessage.style.display = 'none';
+                countdown.textContent = '5';
+            });
+            
+            // Fingerprint registration functionality
+            let holdTimer;
+            let countdownValue = 5;
+            
+            // For mouse events (desktop)
+            fingerprintBtn.addEventListener('mousedown', startHold);
+            fingerprintBtn.addEventListener('mouseup', cancelHold);
+            fingerprintBtn.addEventListener('mouseleave', cancelHold);
+            
+            // For touch events (mobile)
+            fingerprintBtn.addEventListener('touchstart', startHold);
+            fingerprintBtn.addEventListener('touchend', cancelHold);
+            fingerprintBtn.addEventListener('touchcancel', cancelHold);
+            
+            function startHold(e) {
+                e.preventDefault(); // Prevent default behavior
+                
+                // Reset state
+                fingerprintBtn.classList.remove('success');
+                successMessage.style.display = 'none';
+                countdownValue = 5;
+                countdown.textContent = countdownValue;
+                
+                // Start the hold
+                fingerprintBtn.classList.add('active');
+                countdown.style.display = 'block';
+                
+                // Start countdown
+                holdTimer = setInterval(function() {
+                    countdownValue--;
+                    countdown.textContent = countdownValue;
+                    
+                    if (countdownValue <= 0) {
+                        // Success - fingerprint registered
+                        clearInterval(holdTimer);
+                        fingerprintBtn.classList.remove('active');
+                        fingerprintBtn.classList.add('success');
+                        countdown.style.display = 'none';
+                        successMessage.style.display = 'block';
+                        
+                        // Show payment modal after a short delay
+                        setTimeout(function() {
+                            paymentModal.classList.add('active');
+                        }, 800);
+                    }
+                }, 1000);
+            }
+            
+            function cancelHold() {
+                clearInterval(holdTimer);
+                fingerprintBtn.classList.remove('active');
+                countdown.style.display = 'none';
+                countdownValue = 5;
+                countdown.textContent = countdownValue;
+            }
+            
+            // Modal functionality
+            closeModalBtn.addEventListener('click', function() {
+                paymentModal.classList.remove('active');
+            });
+            
+            proceedPaymentBtn.addEventListener('click', function() {
+                alert('Redirecting to secure payment portal...');
+                paymentModal.classList.remove('active');
+            });
+            
+            // Close modal when clicking outside
+            paymentModal.addEventListener('click', function(e) {
+                if (e.target === paymentModal) {
+                    paymentModal.classList.remove('active');
+                }
+            });
+            
+            // Add some visual feedback for inputs
+            usernameInput.addEventListener('input', function() {
+                if (usernameInput.value.trim() === validUsername) {
+                    usernameInput.style.borderColor = '#4CAF50';
+                } else {
+                    usernameInput.style.borderColor = '#e1e5eb';
+                }
+            });
+            
+            passportInput.addEventListener('input', function() {
+                if (passportInput.value.trim() === validPassport) {
+                    passportInput.style.borderColor = '#4CAF50';
+                } else {
+                    passportInput.style.borderColor = '#e1e5eb';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
